@@ -27,13 +27,11 @@ require_once('../partials/head.php');
     <div class="account-pages"></div>
     <div class="clearfix"></div>
     <div class="wrapper-page">
-
-        <div class="account-bg">
+        <div class="account-b">
             <div class="card-box mb-0">
                 <div class="text-center m-t-20">
                     <a href="" class="logo">
-                        <i class="zmdi zmdi-group-work icon-c-logo"></i>
-                        <span>iTimeTable - Automated Time Table Generator</span>
+                        <span>Automated Time Table Generator</span>
                     </a>
                 </div>
                 <div class="m-t-10 p-20">
@@ -58,11 +56,14 @@ require_once('../partials/head.php');
 
                         <div class="form-group row">
                             <div class="col-12">
-                                <div class="checkbox checkbox-custom">
-                                    <input id="checkbox-signup" type="checkbox">
-                                    <label for="checkbox-signup">
-                                        Remember me
-                                    </label>
+                                <div class="col-12 text-center">
+                                    <h6 class="text-muted text-uppercase m-b-0 m-t-0">Sign In As</h6>
+                                </div>
+                                <div class="text-center">
+                                    <select name="Login_Rank" class="custom-select mb-3">
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Staff">Staff</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
