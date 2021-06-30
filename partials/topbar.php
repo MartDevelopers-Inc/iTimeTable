@@ -85,5 +85,64 @@ while ($user = $res->fetch_object()) {
 
         </div> <!-- end container -->
     </div>
+
+    <div class="navbar-custom">
+        <div class="container">
+            <div id="navigation">
+                <!-- Navigation Menu-->
+                <ul class="navigation-menu">
+                    <li>
+                        <a href="dashboard"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">
+                            <i class="zmdi zmdi-group"></i>
+                            <span> Academics Hierachy </span> </a>
+                        <ul class="submenu megamenu">
+                            <li>
+                                <ul>
+                                    <li><a href="faculties">Faculties</a></li>
+                                    <li><a href="departments">Departments</a></li>
+                                    <li><a href="courses">Courses</a></li>
+                                    <li><a href="units">Units</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="year_time">
+                            <i class="zmdi zmdi-time-interval"></i>
+                            <span> Years & Time </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="semester"><i class="zmdi zmdi-widgets"></i> <span> Semesters </span> </a>
+                    </li>
+                    <li>
+                        <a href="lecturers"><i class="zmdi zmdi-accounts-alt"></i> <span> Lecturers </span> </a>
+                    </li>
+                    <li>
+                        <a href="rooms"><i class="zmdi zmdi-home"></i> <span> Rooms </span> </a>
+                    </li>
+                    <li>
+                        <a href="timetable"><i class="zmdi zmdi-grid"></i> <span> Time Table </span> </a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#"><i class="zmdi zmdi-file-text"></i> <span> Reports </span> </a>
+                        <ul class="submenu megamenu">
+                            <li>
+                                <ul>
+                                    <li><a href="report_timetable">Time Tables</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+                <!-- End navigation menu  -->
+            </div>
+        </div>
+    </div>
 <?php
 } ?>
