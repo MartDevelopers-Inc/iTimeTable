@@ -99,7 +99,7 @@ require_once('../partials/head.php');
 
                         <div class="form-group row m-t-30 mb-0">
                             <div class="col-12">
-                                <a target="_blank" href="reset_password" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
+                                <a href="reset_password" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot Your Password?</a>
                             </div>
                         </div>
                     </form>

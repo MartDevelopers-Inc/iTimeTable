@@ -78,6 +78,11 @@ require_once('../partials/head.php');
                                 <button name="Reset_Password" class="btn btn-success btn-block waves-effect waves-light" type="submit">Reset Password</button>
                             </div>
                         </div>
+                        <div class="form-group row m-t-30 mb-0">
+                            <div class="col-12">
+                                <a href="index" class="text-muted"><i class="fa fa-lock m-r-5"></i> Remembered Your Password?</a>
+                            </div>
+                        </div>
 
                     </form>
                 </div>
