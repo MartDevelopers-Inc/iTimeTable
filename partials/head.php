@@ -20,5 +20,7 @@
 
     <!-- Modernizr js -->
     <script src="../public/js/modernizr.min.js"></script>
+    <!-- IziAlerts Css -->
+    <link rel="stylesheet" type="text/css" href="../public/plugins/iziToast/iziToast.min.css">
 
 </head>

@@ -19,6 +19,30 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+session_start();
+include('../config/config.php');
+
+if (isset($_POST['Login'])) {
+    $Login_username = $_POST['Login_username'];
+    $Login_Rank = $_POST['Login_Rank'];
+    $Login_password = sha1(md5($_POST['Login_password']));
+
+    $stmt = $mysqli->prepare("SELECT Login_username, Login_password, Login_Rank, Login_id  FROM Login  WHERE Login_username =? AND Login_password =? AND Login_Rank = ?");
+    $stmt->bind_param('sss', $Login_username, $Login_password, $Login_Rank);
+    $stmt->execute(); //execute bind 
+
+    $stmt->bind_result($Login_username, $Login_password, $Login_Rank, $Login_id);
+    $rs = $stmt->fetch();
+    $_SESSION['Login_id'] = $Login_id;
+    $_SESSION['Login_Rank'] = $Login_Rank;
+
+    /* Decide Login User Dashboard Based On User Rank */
+    if ($rs) {
+        header("location:dashboard");
+    } else {
+        $err = "Login Failed, Please Check Your Credentials And Login Permission ";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -40,8 +64,7 @@ require_once('../partials/head.php');
                             <h6 class="text-muted text-uppercase m-b-0 m-t-0">Sign In</h6>
                         </div>
                     </div>
-                    <form method="POST" class="m-t-20" action="index.html">
-
+                    <form method="POST" class="m-t-20">
                         <div class="form-group row">
                             <div class="col-12">
                                 <input class="form-control" name="Login_username" type="text" required="" placeholder="Username">
@@ -76,7 +99,7 @@ require_once('../partials/head.php');
 
                         <div class="form-group row m-t-30 mb-0">
                             <div class="col-12">
-                                <a href="reset_password" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
+                                <a target="_blank" href="reset_password" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
                             </div>
                         </div>
                     </form>

@@ -17,3 +17,56 @@
         })
     }
 </script>
+<!-- iZi Toast Js -->
+<script src="../public/plugins/iziToast/iziToast.min.js" type="text/javascript"></script>
+<?php if (isset($success)) { ?>
+    <!--This code for injecting success alert-->
+    <script>
+        iziToast.success({
+            title: 'Success',
+            position: 'topRight',
+            transitionIn: 'flipInX',
+            transitionOut: 'flipOutX',
+            transitionInMobile: 'fadeInUp',
+            transitionOutMobile: 'fadeOutDown',
+            message: '<?php echo $success; ?>',
+        });
+    </script>
+
+<?php } ?>
+
+<?php if (isset($err)) { ?>
+    <!--This code for injecting error alert-->
+    <script>
+        iziToast.error({
+            title: 'Error',
+            timeout: 10000,
+            resetOnHover: true,
+            position: 'topRight',
+            transitionIn: 'flipInX',
+            transitionOut: 'flipOutX',
+            transitionInMobile: 'fadeInUp',
+            transitionOutMobile: 'fadeOutDown',
+            message: '<?php echo $err; ?>',
+        });
+    </script>
+
+<?php } ?>
+
+<?php if (isset($info)) { ?>
+    <!--This code for injecting info alert-->
+    <script>
+        iziToast.warning({
+            title: 'Warning',
+            position: 'topLeft',
+            transitionIn: 'flipInX',
+            transitionOut: 'flipOutX',
+            transitionIn: 'fadeInUp',
+            transitionInMobile: 'fadeInUp',
+            transitionOutMobile: 'fadeOutDown',
+            message: '<?php echo $info; ?>',
+        });
+    </script>
+
+<?php }
+?>
