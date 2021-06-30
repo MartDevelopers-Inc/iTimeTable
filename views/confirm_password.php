@@ -21,28 +21,28 @@
  */
 session_start();
 include('../config/config.php');
-if (isset($_POST['Reset_Password'])) {
 
-    $Login_Username = $_POST['Login_Username'];
-    $query = mysqli_query($mysqli, "SELECT * from `Login` WHERE Login_Username = '" . $Login_Username . "' ");
-    $num_rows = mysqli_num_rows($query);
+if (isset($_POST['Confirm_Password'])) {
 
-    if ($num_rows > 0) {
-        $n = date('y');
-        $new_password = bin2hex(random_bytes($n));
-        $query = "UPDATE Login SET  Login_password=? WHERE  Login_Username =? ";
+    $Login_Username  = $_SESSION['Login_Username'];
+    $new_password = sha1(md5($_POST['new_password']));
+    $confirm_password = sha1(md5($_POST['confirm_password']));
+    /* Check If Passwords Match */
+    if ($new_password != $confirm_password) {
+        /* Die */
+        $err = "Passwords Does Not Match";
+    } else {
+        /* Update Password */
+        $query = "UPDATE Login  SET  Login_password =? WHERE  Login_Username = '$Login_Username' ";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ss', $new_password, $Login_Username);
+        //bind paramaters
+        $rc = $stmt->bind_param('s',  $confirm_password);
         $stmt->execute();
         if ($stmt) {
-            $_SESSION['Login_Username'] = $Login_Username;
-
-            $success = "Password Reset" && header("refresh:1; url=confirm_password");
+            $success = "Password Reset" && header("refresh:1; url=index");
         } else {
-            $err = "Password reset failed";
+            $err = "Password Reset Failed";
         }
-    } else {
-        $err = "User Account Does Not Exist";
     }
 }
 require_once('../partials/head.php');
@@ -69,13 +69,18 @@ require_once('../partials/head.php');
                     <form class="m-t-30" method="POST">
                         <div class="form-group row">
                             <div class="col-12">
-                                <input class="form-control" type="text" name="Login_Username" required placeholder="Enter Your Username">
+                                <input class="form-control" type="password" name="new_password" required placeholder="Enter New Password">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <input class="form-control" type="password" name="confirm_password" required placeholder="Confirm Your Password">
                             </div>
                         </div>
 
                         <div class="form-group row text-center m-t-20 mb-0">
                             <div class="col-12">
-                                <button name="Reset_Password" class="btn btn-success btn-block waves-effect waves-light" type="submit">Reset Password</button>
+                                <button name="Confirm_Password" class="btn btn-success btn-block waves-effect waves-light" type="submit">Confirm Password</button>
                             </div>
                         </div>
 
