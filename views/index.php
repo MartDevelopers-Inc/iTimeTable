@@ -31,7 +31,7 @@ require_once('../partials/head.php');
         <div class="account-bg">
             <div class="card-box mb-0">
                 <div class="text-center m-t-20">
-                    <a href="index.html" class="logo">
+                    <a href="" class="logo">
                         <i class="zmdi zmdi-group-work icon-c-logo"></i>
                         <span>iTimeTable - Automated Time Table Generator</span>
                     </a>
@@ -46,13 +46,13 @@ require_once('../partials/head.php');
 
                         <div class="form-group row">
                             <div class="col-12">
-                                <input class="form-control" type="text" required="" placeholder="Username">
+                                <input class="form-control" name="Login_username" type="text" required="" placeholder="Username">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-12">
-                                <input class="form-control" type="password" required="" placeholder="Password">
+                                <input class="form-control" name="Login_password" type="password" required="" placeholder="Password">
                             </div>
                         </div>
 
@@ -69,36 +69,27 @@ require_once('../partials/head.php');
 
                         <div class="form-group text-center row m-t-10">
                             <div class="col-12">
-                                <button class="btn btn-success btn-block waves-effect waves-light" type="submit">Log In</button>
+                                <button name="Login" class="btn btn-success btn-block waves-effect waves-light" type="submit">Log In</button>
                             </div>
                         </div>
 
                         <div class="form-group row m-t-30 mb-0">
                             <div class="col-12">
-                                <a href="pages-recoverpw.html" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
+                                <a href="reset_password" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
                             </div>
                         </div>
                     </form>
-
                 </div>
 
                 <div class="clearfix"></div>
             </div>
         </div>
-        <!-- end card-box-->
-
-        <!-- <div class="m-t-20">
-            <div class="text-center">
-                <p class="text-white">Don't have an account? <a href="pages-register.html" class="text-white m-l-5"><b>Sign Up</b></a></p>
-            </div>
-        </div> -->
 
     </div>
     <!-- end wrapper page -->
 
     <!-- jQuery  -->
     <?php require_once('../partials/scripts.php'); ?>
-
 </body>
 
 </html>

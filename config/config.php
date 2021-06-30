@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Fri Jun 11 2021
+ * Created on Wed Jun 30 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -20,8 +20,9 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+
     $dbuser="root";
     $dbpass="";
     $host="localhost";
-    $db="ezana_lms";
+    $db="Timetable_Generator";
     $mysqli=new mysqli($host,$dbuser, $dbpass, $db);

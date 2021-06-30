@@ -41,7 +41,7 @@ class DataSource
 
     const PASSWORD = '';
 
-    const DATABASENAME = 'ezana_lms';
+    const DATABASENAME = 'Timetable_Generator';
 
     private $conn;
 
