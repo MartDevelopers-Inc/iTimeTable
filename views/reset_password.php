@@ -35,7 +35,7 @@ if (isset($_POST['Reset_Password'])) {
         $rc = $stmt->bind_param('ss', $new_password, $Login_Username);
         $stmt->execute();
         if ($stmt) {
-            $_SESSION['Login_Username'] = $Login_Username;
+            $_SESSION['Login_username'] = $Login_Username;
 
             $success = "Password Reset" && header("refresh:1; url=confirm_password");
         } else {
