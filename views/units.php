@@ -85,13 +85,13 @@ if (isset($_POST['update_unit'])) {
         $Unit_desc = $_POST['Unit_desc'];
     } else {
         $error = 1;
-        $err = "Unit  Details Cannot Be Empty";
+        $err = "Unit   Details Cannot Be Empty";
     }
     if (isset($_POST['Unit_id']) && !empty($_POST['Unit_id'])) {
         $Unit_id = $_POST['Unit_id'];
     } else {
         $error = 1;
-        $err = "Unit Cannot Be Empty";
+        $err = "Unit ID Cannot Be Empty";
     }
 
     if (!$error) {
@@ -153,7 +153,7 @@ require_once('../partials/head.php');
             <!-- end row -->
 
             <!-- Add Modal -->
-            <div class="modal fade" id="AddCourses" tabindex="-1">
+            <div class="modal fade" id="AddUnits" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -188,7 +188,7 @@ require_once('../partials/head.php');
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Unit Details </label>
-                                    <textarea name="Unit_details" class="form-control Summernote" required rows="5"></textarea>
+                                    <textarea name="Unit_desc" class="form-control Summernote" required rows="5"></textarea>
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" name="add_unit" class="btn btn-primary">Submit</button>
@@ -209,7 +209,7 @@ require_once('../partials/head.php');
                             <thead>
                                 <tr>
                                     <th>Unit Name</th>
-                                    <th>UNit Details</th>
+                                    <th>Unit Details</th>
                                     <th>Manage Units</th>
                                 </tr>
                             </thead>
@@ -217,7 +217,7 @@ require_once('../partials/head.php');
 
                             <tbody>
                                 <?php
-                                $ret = "SELECT * FROM `Units` ";
+                                $ret = "SELECT * FROM `Unit` ";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
@@ -233,7 +233,7 @@ require_once('../partials/head.php');
                                                 echo
                                                 "
                                                         <a href='#update-$units->Unit_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
-                                                        <a href='courses?delete=$units->Unit_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
+                                                        <a href='units?delete=$units->Unit_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
 
                                                     ";
                                             } else {
@@ -255,7 +255,7 @@ require_once('../partials/head.php');
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Unit Name</label>
                                                                     <input type="text" name="Unit_name" value="<?php echo $units->Unit_name; ?>" class="form-control" required>
-                                                                    <input type="hidden" name="Course_id" value="<?php echo $units->Unit_id; ?>" class="form-control" required>
+                                                                    <input type="hidden" name="Unit_id" value="<?php echo $units->Unit_id; ?>" class="form-control" required>
 
                                                                 </div>
                                                                 <div class="form-group">
