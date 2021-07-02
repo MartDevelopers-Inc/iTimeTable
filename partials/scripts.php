@@ -70,7 +70,7 @@
             }
         });
     }
-    
+
     function GetDepartmentDetails(val) {
         /* Department Details */
         $.ajax({
@@ -97,6 +97,83 @@
         });
     }
 
+    function GetUnitDetails(val) {
+        /* Unit Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'UnitName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#UnitId').val(data);
+            }
+        });
+    }
+
+    function GetYearDetails(val) {
+        /* Year Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'YearName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#YearID').val(data);
+            }
+        });
+    }
+
+    function GetSemesterDetails(val) {
+        /* Semester Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'SemesterName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#SemesterID').val(data);
+            }
+        });
+    }
+
+    function GetLectureDetails(val) {
+        /* Lec Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'LectuerName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#LecturerId').val(data);
+            }
+        });
+    }
+
+    function GetTimeDetails(val) {
+        /* Time Name Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'TimeName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#TimeId').val(data);
+            }
+        });
+    }
+
+    function GetRoomDetails(val) {
+        /* Room Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'RoomName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#RoomID').val(data);
+            }
+        });
+    }
 </script>
 <!-- iZi Toast Js -->
 <script src="../public/plugins/iziToast/iziToast.min.js" type="text/javascript"></script>
