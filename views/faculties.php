@@ -24,6 +24,7 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
+
 /* Add Faculty */
 if (isset($_POST['add_faculty'])) {
     $error = 0;
@@ -37,7 +38,7 @@ if (isset($_POST['add_faculty'])) {
         $Faculty_desc = $_POST['Faculty_desc'];
     } else {
         $error = 1;
-        $err = "Faculty Detailt Cannot Be Empty";
+        $err = "Faculty Details Cannot Be Empty";
     }
 
     if (!$error) {
@@ -63,9 +64,58 @@ if (isset($_POST['add_faculty'])) {
         }
     }
 }
+
 /* Update Faculty */
+if (isset($_POST['add_faculty'])) {
+    $error = 0;
+    if (isset($_POST['Faculty_name']) && !empty($_POST['Faculty_name'])) {
+        $Faculty_name = mysqli_real_escape_string($mysqli, trim($_POST['Faculty_name']));
+    } else {
+        $error = 1;
+        $err = "Faculty Name Cannot Be Empty";
+    }
+    if (isset($_POST['Faculty_desc']) && !empty($_POST['Faculty_desc'])) {
+        $Faculty_desc = $_POST['Faculty_desc'];
+    } else {
+        $error = 1;
+        $err = "Faculty Details Cannot Be Empty";
+    }
+    if (isset($_POST['Faculty_id']) && !empty($_POST['Faculty_id'])) {
+        $Faculty_id = $_POST['Faculty_id'];
+    } else {
+        $error = 1;
+        $err = "Faculty ID Cannot Be Empty";
+    }
+
+    if (!$error) {
+
+        /* Persist Changes In Database */
+        $query = "UPDATE Faculty SET Faculty_name =?, Faculty_desc = ? WHERE Faculty_id = ?";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('sss', $Faculty_name, $Faculty_desc, $Faculty_id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "$Faculty_name Added";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
 
 /* Delete Faculty */
+if (isset($_GET['delete'])) {
+    $delete = $_GET['delete'];
+    $adn = "DELETE FROM Faculty WHERE Faculty_id=?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('s', $delete);
+    $stmt->execute();
+    $stmt->close();
+    if ($stmt) {
+        $success = "Deleted" && header("refresh:1; url=faculties");
+    } else {
+        $info = "Please Try Again Or Try Later";
+    }
+}
 
 require_once('../partials/head.php');
 ?>
