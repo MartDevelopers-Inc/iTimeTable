@@ -143,7 +143,7 @@ require_once('../partials/head.php');
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <div class="btn-group float-right m-t-15">
-                            <button type="button" data-toggle="modal" data-target="#AddFaculty" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Faculty <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
+                            <button type="button" data-toggle="modal" data-target="#AddDepartment" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Department <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
                         </div>
                         <h4 class="page-title">Departments</h4>
                     </div>
@@ -152,7 +152,7 @@ require_once('../partials/head.php');
             <!-- end row -->
 
             <!-- Add Modal -->
-            <div class="modal fade" id="AddFaculty" tabindex="-1">
+            <div class="modal fade" id="AddDepartment" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -163,26 +163,28 @@ require_once('../partials/head.php');
                         </div>
                         <div class="modal-body">
                             <form method="POST">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Select Faculty Name</label>
-                                    <select class="form-control" id="FacultyName" onchange="GetFacultyDetails(this.value)">
-                                        <option>Select Faculty Name</option>
-                                        <?php
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputEmail1">Select Faculty Name</label>
+                                        <select class="form-control" id="FacultyName" onchange="GetFacultyDetails(this.value)">
+                                            <option>Select Faculty Name</option>
+                                            <?php
 
-                                        $ret = "SELECT * FROM `Faculty` ";
-                                        $stmt = $mysqli->prepare($ret);
-                                        $stmt->execute(); //ok
-                                        $res = $stmt->get_result();
-                                        while ($faculty = $res->fetch_object()) {
-                                        ?>
-                                            <option><?php echo $faculty->Faculty_name; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <input type="hidden" name="Department_faculty_id" id="FacultyID">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Department Name</label>
-                                    <input type="text" name="Department_name" class="form-control" required>
+                                            $ret = "SELECT * FROM `Faculty` ";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($faculty = $res->fetch_object()) {
+                                            ?>
+                                                <option><?php echo $faculty->Faculty_name; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <input type="hidden" name="Department_faculty_id" id="FacultyID">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputEmail1">Department Name</label>
+                                        <input type="text" name="Department_name" class="form-control" required>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Department Details </label>
@@ -207,7 +209,7 @@ require_once('../partials/head.php');
                             <thead>
                                 <tr>
                                     <th>Department Name</th>
-                                    <th>Faculty Details</th>
+                                    <th>Deoartment Details</th>
                                     <th>Manage Department</th>
                                 </tr>
                             </thead>
@@ -253,6 +255,8 @@ require_once('../partials/head.php');
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Department Name</label>
                                                                     <input type="text" name="Department_name" value="<?php echo $dep->Department_name; ?>" class="form-control" required>
+                                                                    <input type="hidden" name="Department_id" value="<?php echo $dep->Department_id; ?>" class="form-control" required>
+
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Department Details </label>
@@ -263,7 +267,6 @@ require_once('../partials/head.php');
                                                                 </div>
                                                             </form>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
