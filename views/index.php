@@ -39,9 +39,10 @@ if (isset($_POST['Login'])) {
     /* Decide Login User Dashboard Based On User Rank */
     if ($rs) {
         header("location:dashboard");
-    } else {
-        $err = "Login Failed, Please Check Your Credentials And Login Permission ";
+    } else if ($Login_Rank == 'Student') {
+        header("location:std_dashboard");
     }
+    $err = "Login Failed, Please Check Your Credentials And Login Permission ";
 }
 require_once('../partials/head.php');
 ?>
