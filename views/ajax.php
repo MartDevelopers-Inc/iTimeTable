@@ -56,3 +56,67 @@ if (!empty($_POST["CourseName"])) {
         echo htmlentities($row['Course_id']);
     }
 }
+
+/* Get Unit Id */
+if (!empty($_POST["UnitName"])) {
+    $id = $_POST['UnitName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Unit WHERE Unit_name = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Unit_id']);
+    }
+}
+/* Get  Academic Year */
+if (!empty($_POST["YearName"])) {
+    $id = $_POST['YearName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Year WHERE Year_name = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Year_id']);
+    }
+}
+/* Get Semester  */
+if (!empty($_POST["SemesterName"])) {
+    $id = $_POST['SemesterName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Semester WHERE Semester_name = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Semester_id']);
+    }
+}
+
+/* Get Lecturer  */
+if (!empty($_POST["LectuerName"])) {
+    $id = $_POST['LectuerName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Lecturer WHERE Lecturer_name = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Lecturer_id']);
+    }
+}
+
+/* Get Time  */
+if (!empty($_POST["TimeName"])) {
+    $id = $_POST['TimeName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Time WHERE Time_name = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Time_id']);
+    }
+}
+
+/* Get Room Name */
+if (!empty($_POST["RoomName"])) {
+    $id = $_POST['RoomName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Room WHERE  Room_name = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Room_id']);
+    }
+}
