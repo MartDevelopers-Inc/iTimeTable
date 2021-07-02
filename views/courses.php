@@ -143,7 +143,7 @@ require_once('../partials/head.php');
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <div class="btn-group float-right m-t-15">
-                            <button type="button" data-toggle="modal" data-target="#AddCourses" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Department <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
+                            <button type="button" data-toggle="modal" data-target="#AddCourses" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Course <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
                         </div>
                         <h4 class="page-title">Courses</h4>
                     </div>
@@ -152,7 +152,7 @@ require_once('../partials/head.php');
             <!-- end row -->
 
             <!-- Add Modal -->
-            <div class="modal fade" id="AddDepartment" tabindex="-1">
+            <div class="modal fade" id="AddCourses" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -263,7 +263,7 @@ require_once('../partials/head.php');
                                                                     <textarea name="Course_desc" class="form-control Summernote" required rows="5"><?php echo $courses->Course_desc; ?></textarea>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="update_department" class="btn btn-primary">Submit</button>
+                                                                    <button type="submit" name="update_course" class="btn btn-primary">Submit</button>
                                                                 </div>
                                                             </form>
                                                         </div>

@@ -34,10 +34,11 @@ if (!empty($_POST["FacultyName"])) {
 }
 
 
+
 /* Get Department ID */
 if (!empty($_POST["DepartmentName"])) {
     $id = $_POST['DepartmentName'];
-    $stmt = $DB_con->prepare("SELECT * FROM Department WHERE Department_id = :id");
+    $stmt = $DB_con->prepare("SELECT * FROM Department WHERE Department_name = :id");
     $stmt->execute(array(':id' => $id));
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
