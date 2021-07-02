@@ -147,7 +147,7 @@ require_once('../partials/head.php');
             <!-- end row -->
 
             <!-- Add Modal -->
-            <div class="modal fade" id="AddYear" tabindex="-1">
+            <div class="modal fade" id="AddSem" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -236,7 +236,7 @@ require_once('../partials/head.php');
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Semester Details </label>
-                                                                    <textarea name="Semester_desc" class="form-control Summernote" required rows="5"><?php echo $year->Year_desc; ?></textarea>
+                                                                    <textarea name="Semester_desc" class="form-control Summernote" required rows="5"><?php echo $sem->Semester_desc; ?></textarea>
                                                                 </div>
                                                                 <div class="text-right">
                                                                     <button type="submit" name="update_sem" class="btn btn-primary">Submit</button>
