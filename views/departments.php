@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Thu Jul 01 2021
+ * Created on Fri Jul 02 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -20,44 +20,51 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
 
-/* Add Faculty */
-if (isset($_POST['add_faculty'])) {
+/* Add Department */
+if (isset($_POST['add_department'])) {
     $error = 0;
-    if (isset($_POST['Faculty_name']) && !empty($_POST['Faculty_name'])) {
-        $Faculty_name = mysqli_real_escape_string($mysqli, trim($_POST['Faculty_name']));
+    if (isset($_POST['Department_name']) && !empty($_POST['Department_name'])) {
+        $Department_name = mysqli_real_escape_string($mysqli, trim($_POST['Department_name']));
     } else {
         $error = 1;
-        $err = "Faculty Name Cannot Be Empty";
+        $err = "Department Name Cannot Be Empty";
     }
-    if (isset($_POST['Faculty_desc']) && !empty($_POST['Faculty_desc'])) {
-        $Faculty_desc = $_POST['Faculty_desc'];
+    if (isset($_POST['Department_desc']) && !empty($_POST['Department_desc'])) {
+        $Department_desc = $_POST['Department_desc'];
     } else {
         $error = 1;
-        $err = "Faculty Details Cannot Be Empty";
+        $err = "Department Details Cannot Be Empty";
+    }
+    if (isset($_POST['Department_faculty_id']) && !empty($_POST['Department_faculty_id'])) {
+        $Department_faculty_id = $_POST['Department_faculty_id'];
+    } else {
+        $error = 1;
+        $err = "Department Faculty Details Cannot Be Empty";
     }
 
     if (!$error) {
         //prevent Double entries
-        $sql = "SELECT * FROM  Faculty WHERE  Faculty_name='$Faculty_name' ";
+        $sql = "SELECT * FROM  Department WHERE  Department_name='$Department_name' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($Faculty_name == $row['Faculty_name']) {
-                $err =  "$Faculty_name Already Exists";
+            if ($Department_name == $row['Department_name']) {
+                $err =  "$Department_name Already Exists";
             }
         } else {
             /* Persist Changes In Database */
-            $query = "INSERT INTO Faculty (Faculty_name, Faculty_desc) VALUES(?,?)";
+            $query = "INSERT INTO Department (Department_name, Department_desc, Department_faculty_id ) VALUES(?,?,?)";
             $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('ss', $Faculty_name, $Faculty_desc);
+            $rc = $stmt->bind_param('sss', $Department_name, $Department_desc, $Department_faculty_id);
             $stmt->execute();
             if ($stmt) {
-                $success = "$Faculty_name Added";
+                $success = "$Department_name Added";
             } else {
                 $info = "Please Try Again Or Try Later";
             }
@@ -65,37 +72,36 @@ if (isset($_POST['add_faculty'])) {
     }
 }
 
-/* Update Faculty */
-if (isset($_POST['update_faculty'])) {
+/* Update Department */
+if (isset($_POST['update_department'])) {
     $error = 0;
-    if (isset($_POST['Faculty_name']) && !empty($_POST['Faculty_name'])) {
-        $Faculty_name = mysqli_real_escape_string($mysqli, trim($_POST['Faculty_name']));
+    if (isset($_POST['Department_name']) && !empty($_POST['Department_name'])) {
+        $Department_name = mysqli_real_escape_string($mysqli, trim($_POST['Department_name']));
     } else {
         $error = 1;
-        $err = "Faculty Name Cannot Be Empty";
+        $err = "Department Name Cannot Be Empty";
     }
-    if (isset($_POST['Faculty_desc']) && !empty($_POST['Faculty_desc'])) {
-        $Faculty_desc = $_POST['Faculty_desc'];
+    if (isset($_POST['Department_desc']) && !empty($_POST['Department_desc'])) {
+        $Department_desc = $_POST['Department_desc'];
     } else {
         $error = 1;
-        $err = "Faculty Details Cannot Be Empty";
+        $err = "Department Details Cannot Be Empty";
     }
-    if (isset($_POST['Faculty_id']) && !empty($_POST['Faculty_id'])) {
-        $Faculty_id = $_POST['Faculty_id'];
+    if (isset($_POST['Department_id']) && !empty($_POST['Department_id'])) {
+        $Department_id = $_POST['Department_id'];
     } else {
         $error = 1;
-        $err = "Faculty ID Cannot Be Empty";
+        $err = "Department ID Cannot Be Empty";
     }
 
     if (!$error) {
-
         /* Persist Changes In Database */
-        $query = "UPDATE Faculty SET Faculty_name =?, Faculty_desc = ? WHERE Faculty_id = ?";
+        $query = "UPDATE Department  SET Department_name =?, Department_desc =? WHERE Department_id = ?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('sss', $Faculty_name, $Faculty_desc, $Faculty_id);
+        $rc = $stmt->bind_param('sss', $Department_name, $Department_desc, $Department_id);
         $stmt->execute();
         if ($stmt) {
-            $success = "$Faculty_name Updated";
+            $success = "$Department_name Updated";
         } else {
             $info = "Please Try Again Or Try Later";
         }
@@ -105,13 +111,13 @@ if (isset($_POST['update_faculty'])) {
 /* Delete Faculty */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $adn = "DELETE FROM Faculty WHERE Faculty_id=?";
+    $adn = "DELETE FROM Department WHERE Department_id=?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $delete);
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1; url=faculties");
+        $success = "Deleted" && header("refresh:1; url=departments");
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -139,17 +145,18 @@ require_once('../partials/head.php');
                         <div class="btn-group float-right m-t-15">
                             <button type="button" data-toggle="modal" data-target="#AddFaculty" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Faculty <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
                         </div>
-                        <h4 class="page-title">Faculties</h4>
+                        <h4 class="page-title">Departments</h4>
                     </div>
                 </div>
             </div>
             <!-- end row -->
+
             <!-- Add Modal -->
             <div class="modal fade" id="AddFaculty" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Create Faculty</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Create Department</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -157,15 +164,32 @@ require_once('../partials/head.php');
                         <div class="modal-body">
                             <form method="POST">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Faculty Name</label>
-                                    <input type="text" name="Faculty_name" class="form-control" required>
+                                    <label for="exampleInputEmail1">Select Faculty Name</label>
+                                    <select class="form-control" id="FacultyName" onchange="GetFacultyDetails(this.value)">
+                                        <option>Select Faculty Name</option>
+                                        <?php
+
+                                        $ret = "SELECT * FROM `Faculty` ";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute(); //ok
+                                        $res = $stmt->get_result();
+                                        while ($faculty = $res->fetch_object()) {
+                                        ?>
+                                            <option><?php echo $faculty->Faculty_name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <input type="hidden" name="Department_faculty_id" id="FacultyID">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Faculty Name</label>
-                                    <textarea name="Faculty_desc" class="form-control Summernote" required rows="5"></textarea>
+                                    <label for="exampleInputEmail1">Department Name</label>
+                                    <input type="text" name="Department_name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Department Details </label>
+                                    <textarea name="Department_desc" class="form-control Summernote" required rows="5"></textarea>
                                 </div>
                                 <div class="text-right">
-                                    <button type="submit" name="add_faculty" class="btn btn-primary">Submit</button>
+                                    <button type="submit" name="add_department" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -182,32 +206,32 @@ require_once('../partials/head.php');
                         <table id="datatable" class="table table-bordered dt-responsive wrap">
                             <thead>
                                 <tr>
-                                    <th>Faculty Name</th>
+                                    <th>Department Name</th>
                                     <th>Faculty Details</th>
-                                    <th>Manage Faculty</th>
+                                    <th>Manage Department</th>
                                 </tr>
                             </thead>
 
 
                             <tbody>
                                 <?php
-                                $ret = "SELECT * FROM `Faculty` ";
+                                $ret = "SELECT * FROM `Department` ";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
-                                while ($faculty = $res->fetch_object()) {
+                                while ($dep = $res->fetch_object()) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $faculty->Faculty_name; ?></td>
-                                        <td class="bs-linebreak"><?php echo $faculty->Faculty_desc; ?></td>
+                                        <td><?php echo $dep->Department_name; ?></td>
+                                        <td class="bs-linebreak"><?php echo $dep->Department_desc; ?></td>
                                         <td>
                                             <?php
                                             if ($_SESSION['Login_Rank'] == 'Administrator') {
                                                 /* Allow User To Delete And Update Faculty */
                                                 echo
                                                 "
-                                                        <a href='#update-$faculty->Faculty_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
-                                                        <a href='faculties?delete=$faculty->Faculty_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
+                                                        <a href='#update-$dep->Department_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
+                                                        <a href='departments?delete=$dep->Department_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
 
                                                     ";
                                             } else {
@@ -215,11 +239,11 @@ require_once('../partials/head.php');
                                             }
                                             ?>
                                             <!-- Update Modal -->
-                                            <div class="modal fade" id="update-<?php echo $faculty->Faculty_id; ?>" tabindex="-1">
+                                            <div class="modal fade" id="update-<?php echo $dep->Department_id; ?>" tabindex="-1">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Update Faculty</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Update Department</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -227,17 +251,15 @@ require_once('../partials/head.php');
                                                         <div class="modal-body">
                                                             <form method="POST">
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Faculty Name</label>
-                                                                    <input type="text" name="Faculty_name" value="<?php echo $faculty->Faculty_name; ?>" class="form-control" required>
-                                                                    <input type="hidden" name="Faculty_id" value="<?php echo $faculty->Faculty_id; ?>" class="form-control" required>
-
+                                                                    <label for="exampleInputEmail1">Department Name</label>
+                                                                    <input type="text" name="Department_name" value="<?php echo $dep->Department_name; ?>" class="form-control" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Faculty Name</label>
-                                                                    <textarea name="Faculty_desc" class="form-control Summernote" required rows="5"><?php echo $faculty->Faculty_desc; ?></textarea>
+                                                                    <label for="exampleInputEmail1">Department Details </label>
+                                                                    <textarea name="Department_desc" class="form-control Summernote" required rows="5"><?php echo $dep->Department_desc; ?></textarea>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="update_faculty" class="btn btn-primary">Submit</button>
+                                                                    <button type="submit" name="update_department" class="btn btn-primary">Submit</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -246,7 +268,6 @@ require_once('../partials/head.php');
                                                 </div>
                                             </div>
                                             <!-- End Modal -->
-                                           
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -256,14 +277,11 @@ require_once('../partials/head.php');
                 </div>
             </div> <!-- end row -->
         </div>
-
-
         <!-- Footer -->
         <?php require_once('../partials/footer.php'); ?>
         <!-- End Footer -->
 
-
-    </div> <!-- End wrapper -->
+    </div>
     <!-- Scripts -->
     <?php require_once('../partials/scripts.php'); ?>
 
