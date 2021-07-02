@@ -166,7 +166,7 @@ require_once('../partials/head.php');
                                                 <option><?php echo $courses->Unit_name; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input type="hidde" name="Timetable_Unit_id" id="UnitId">
+                                        <input type="hidden" name="Timetable_Unit_id" id="UnitId">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1">Academic Year Name</label>
@@ -182,7 +182,7 @@ require_once('../partials/head.php');
                                                 <option><?php echo $year->Year_name; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input type="hidde" name="Timetable_Year_id" id="YearID">
+                                        <input type="hidden" name="Timetable_Year_id" id="YearID">
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -200,7 +200,7 @@ require_once('../partials/head.php');
                                                 <option><?php echo $sem->Semester_name; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input type="hidde" name="Timetable_Semester_id" id="SemesterID">
+                                        <input type="hidden" name="Timetable_Semester_id" id="SemesterID">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1">Lecturer Name</label>
@@ -216,7 +216,7 @@ require_once('../partials/head.php');
                                                 <option><?php echo $lec->Lecturer_name; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input type="hidde" name="Timetable_Lecturer_id" id="LecturerId">
+                                        <input type="hidden" name="Timetable_Lecturer_id" id="LecturerId">
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -234,7 +234,7 @@ require_once('../partials/head.php');
                                                 <option><?php echo $time->Time_name; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input type="hidde" name="Timetable_Time_id" id="TimeId">
+                                        <input type="hidden" name="Timetable_Time_id" id="TimeId">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1">Room Name</label>
@@ -250,7 +250,7 @@ require_once('../partials/head.php');
                                                 <option><?php echo $room->Room_name; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input type="hidde" name="Timetable_Room_id" id="RoomID">
+                                        <input type="hidden" name="Timetable_Room_id" id="RoomID">
                                     </div>
                                 </div>
 
@@ -269,7 +269,7 @@ require_once('../partials/head.php');
             <div class="row">
                 <div class="col-12">
                     <div class="card-box">
-                        <table id="datatable" class="table table-bordered dt-responsive wrap">
+                        <table class="table table-bordered dt-responsive wrap">
                             <thead>
                                 <tr>
                                     <th>Academic Year</th>
@@ -277,7 +277,7 @@ require_once('../partials/head.php');
                                     <th>Unit Name</th>
                                     <th>Lecturer Details</th>
                                     <th>Class Time</th>
-                                    <th>Room Number</th>
+                                    <th>Room Details</th>
                                     <th>Manage</th>
                                 </tr>
                             </thead>
@@ -297,7 +297,7 @@ require_once('../partials/head.php');
                                         <td><?php echo $time_table->Year_name; ?></td>
                                         <td><?php echo $time_table->Semester_name; ?></td>
                                         <td><?php echo $time_table->Unit_name; ?></td>
-                                        <td><?php echo $time_table->Lecturer_name . "<br> Email: " . $time_table->Lecturer_email . "<br>Phone No: " . $time_table->Lecturer_Mobile_Number; ?></td>
+                                        <td><?php echo "Name: " . $time_table->Lecturer_name . "<br> Email: " . $time_table->Lecturer_email . "<br>Phone No: " . $time_table->Lecturer_Mobile_Number; ?></td>
                                         <td><?php echo $time_table->Time_name; ?></td>
                                         <td><?php echo $time_table->Room_name; ?></td>
                                         <td>
@@ -305,9 +305,7 @@ require_once('../partials/head.php');
                                             if ($_SESSION['Login_Rank'] == 'Administrator') {
                                                 /* Allow User To Delete And Update Faculty */
                                                 echo
-                                                "
-                                                        <a href='timetable?delete=$time_table->Timetable_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
-
+                                                "<a href='timetable?delete=$time_table->Timetable_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
                                                     ";
                                             } else {
                                                 /* Nothing */
