@@ -24,6 +24,49 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
+/* Add Faculty */
+if (isset($_POST['add_faculty'])) {
+    $error = 0;
+    if (isset($_POST['Faculty_name']) && !empty($_POST['Faculty_name'])) {
+        $Faculty_name = mysqli_real_escape_string($mysqli, trim($_POST['Faculty_name']));
+    } else {
+        $error = 1;
+        $err = "Faculty Name Cannot Be Empty";
+    }
+    if (isset($_POST['Faculty_desc']) && !empty($_POST['Faculty_desc'])) {
+        $Faculty_desc = $_POST['Faculty_desc'];
+    } else {
+        $error = 1;
+        $err = "Faculty Detailt Cannot Be Empty";
+    }
+
+    if (!$error) {
+        //prevent Double entries
+        $sql = "SELECT * FROM  Faculty WHERE  Faculty_name='$Faculty_name' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($Faculty_name == $row['Faculty_name']) {
+                $err =  "$Faculty_name Already Exists";
+            }
+        } else {
+            /* Persist Changes In Database */
+            $query = "INSERT INTO Faculty (Faculty_name, Faculty_desc) VALUES(?,?)";
+            $stmt = $mysqli->prepare($query);
+            $rc = $stmt->bind_param('ss', $Faculty_name, $Faculty_desc);
+            $stmt->execute();
+            if ($stmt) {
+                $success = "$Faculty_name Added";
+            } else {
+                $info = "Please Try Again Or Try Later";
+            }
+        }
+    }
+}
+/* Update Faculty */
+
+/* Delete Faculty */
+
 require_once('../partials/head.php');
 ?>
 
@@ -44,7 +87,7 @@ require_once('../partials/head.php');
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <div class="btn-group float-right m-t-15">
-                            <button type="button" class="btn btn-custom dropdown-toggle waves-effect waves-light" >Add Faculty <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
+                            <button type="button" data-toggle="modal" data-target="#AddFaculty" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Faculty <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
                         </div>
                         <h4 class="page-title">Faculties</h4>
                     </div>
@@ -52,7 +95,34 @@ require_once('../partials/head.php');
             </div>
             <!-- end row -->
             <!-- Add Modal -->
+            <div class="modal fade" id="AddFaculty" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Create Faculty</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Faculty Name</label>
+                                    <input type="text" name="Faculty_name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Faculty Name</label>
+                                    <textarea name="Faculty_desc" class="form-control" required rows="5"></textarea>
+                                </div>
+                                <div class="text-right">
+                                    <button type="submit" name="add_faculty" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
             <!-- End Modal -->
 
 
