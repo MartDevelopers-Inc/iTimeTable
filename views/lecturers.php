@@ -156,7 +156,7 @@ require_once('../partials/head.php');
             <!-- end row -->
 
             <!-- Add Modal -->
-            <div class="modal fade" id="AddTime" tabindex="-1">
+            <div class="modal fade" id="AddLecturer" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -246,6 +246,7 @@ require_once('../partials/head.php');
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Name</label>
                                                                     <input type="text" name="Lecturer_name" value="<?php echo $lec->Lecturer_name; ?>" class="form-control" required>
+                                                                    <input type="text" name="Lecturer_id" value="<?php echo $lec->Lecturer_id; ?>" class="form-control" required>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Email </label>
