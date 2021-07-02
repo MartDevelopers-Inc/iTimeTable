@@ -29,7 +29,7 @@ if (isset($_POST['Login'])) {
 
     $stmt = $mysqli->prepare("SELECT Login_username, Login_password, Login_Rank, Login_id  FROM Login  WHERE Login_username =? AND Login_password =? AND Login_Rank = ?");
     $stmt->bind_param('sss', $Login_username, $Login_password, $Login_Rank);
-    $stmt->execute(); //execute bind 
+    $stmt->execute(); //execute bind
 
     $stmt->bind_result($Login_username, $Login_password, $Login_Rank, $Login_id);
     $rs = $stmt->fetch();
@@ -37,12 +37,15 @@ if (isset($_POST['Login'])) {
     $_SESSION['Login_Rank'] = $Login_Rank;
 
     /* Decide Login User Dashboard Based On User Rank */
-    if ($rs) {
+    if ($rs && $Login_Rank == 'Administrator') {
         header("location:dashboard");
-    } else if ($Login_Rank == 'Student') {
+    } else if ($rs && $Login_Rank == 'Lecturer') {
+        header("location:dashboard");
+    } else if ($rs && $Login_Rank == 'Student') {
         header("location:std_dashboard");
+    } else {
+        $err = "Login Failed, Please Check Your Credentials And Login Permission ";
     }
-    $err = "Login Failed, Please Check Your Credentials And Login Permission ";
 }
 require_once('../partials/head.php');
 ?>

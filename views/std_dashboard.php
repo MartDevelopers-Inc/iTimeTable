@@ -45,7 +45,6 @@ require_once('../partials/head.php');
                     <div class="page-title-box">
                         <div class="btn-group float-right m-t-15">
                         </div>
-                        <h4 class="page-title">Time Table</h4>
                     </div>
                 </div>
             </div>

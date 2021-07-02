@@ -165,26 +165,7 @@ while ($user = $res->fetch_object()) {
         </div>
     ';
     } else {
-        echo
-        '
-        <div class="navbar-custom">
-            <div class="container">
-                <div id="navigation">
-                    <!-- Navigation Menu-->
-                    <ul class="navigation-menu">
-                        <li>
-                            <a href="dashboard"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
-                        </li>
-                        <li>
-                            <a href="report_timetable"><i class="zmdi zmdi-grid"></i> <span> Time Table </span> </a>
-                        </li>
-
-                    </ul>
-                    <!-- End navigation menu  -->
-                </div>
-            </div>
-        </div>
-    ';
+        
     }
 }
 ?>
