@@ -66,7 +66,7 @@ if (isset($_POST['add_faculty'])) {
 }
 
 /* Update Faculty */
-if (isset($_POST['add_faculty'])) {
+if (isset($_POST['update_faculty'])) {
     $error = 0;
     if (isset($_POST['Faculty_name']) && !empty($_POST['Faculty_name'])) {
         $Faculty_name = mysqli_real_escape_string($mysqli, trim($_POST['Faculty_name']));
@@ -95,7 +95,7 @@ if (isset($_POST['add_faculty'])) {
         $rc = $stmt->bind_param('sss', $Faculty_name, $Faculty_desc, $Faculty_id);
         $stmt->execute();
         if ($stmt) {
-            $success = "$Faculty_name Added";
+            $success = "$Faculty_name Updated";
         } else {
             $info = "Please Try Again Or Try Later";
         }
@@ -162,7 +162,7 @@ require_once('../partials/head.php');
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Faculty Name</label>
-                                    <textarea name="Faculty_desc" class="form-control" required rows="5"></textarea>
+                                    <textarea name="Faculty_desc" class="form-control Summernote" required rows="5"></textarea>
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" name="add_faculty" class="btn btn-primary">Submit</button>
@@ -179,7 +179,7 @@ require_once('../partials/head.php');
             <div class="row">
                 <div class="col-12">
                     <div class="card-box">
-                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <table id="datatable" class="table table-bordered dt-responsive wrap">
                             <thead>
                                 <tr>
                                     <th>Faculty Name</th>
@@ -199,15 +199,15 @@ require_once('../partials/head.php');
                                 ?>
                                     <tr>
                                         <td><?php echo $faculty->Faculty_name; ?></td>
-                                        <td><small><?php echo $faculty->Faculty_desc; ?></small></td>
+                                        <td class="bs-linebreak"><?php echo $faculty->Faculty_desc; ?></td>
                                         <td>
                                             <?php
                                             if ($_SESSION['Login_Rank'] == 'Administrator') {
                                                 /* Allow User To Delete And Update Faculty */
                                                 echo
                                                 "
-                                                        <a href='#update-$faculty->Faculty_id' data-toggle='modal' class='badge badge-warning'><i class ='fas fa-edit'></i> Update</a>
-                                                        <a href='#delete-$faculty->Faculty_id' data-toggle='modal' class='badge badge-danger'><i class ='fas fa-trash'></i> Delete</a>
+                                                        <a href='#update-$faculty->Faculty_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
+                                                        <a href='faculties?delete=$faculty->Faculty_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
 
                                                     ";
                                             } else {
@@ -215,7 +215,36 @@ require_once('../partials/head.php');
                                             }
                                             ?>
                                             <!-- Update Modal -->
+                                            <div class="modal fade" id="update-<?php echo $faculty->Faculty_id; ?>" tabindex="-1">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Update Faculty</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="POST">
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputEmail1">Faculty Name</label>
+                                                                    <input type="text" name="Faculty_name" value="<?php echo $faculty->Faculty_name; ?>" class="form-control" required>
+                                                                    <input type="hidden" name="Faculty_id" value="<?php echo $faculty->Faculty_id; ?>" class="form-control" required>
 
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputEmail1">Faculty Name</label>
+                                                                    <textarea name="Faculty_desc" class="form-control Summernote" required rows="5"><?php echo $faculty->Faculty_desc; ?></textarea>
+                                                                </div>
+                                                                <div class="text-right">
+                                                                    <button type="submit" name="update_faculty" class="btn btn-primary">Submit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <!-- End Modal -->
 
                                             <!-- Delete Modal -->

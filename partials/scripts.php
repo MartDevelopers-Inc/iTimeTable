@@ -8,8 +8,9 @@
 <!-- App js -->
 <script src="../public/js/jquery.core.js"></script>
 <script src="../public/js/jquery.app.js"></script>
+<!-- Summernote Editor CDN -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <!-- Data Tables CDN -->
-<!-- Data Table Js -->
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -18,10 +19,26 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 <script>
+    /* Init Data Tables */
     $(document).ready(function() {
         $('.table').DataTable();
     });
+    /* Load Summernotes */
+    $(document).ready(function() {
+        $('.Summernote').summernote({
+            height: 300,
+            focus: true,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['height', ['height']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+                ['para', ['ul', 'ol', 'paragraph']],
+            ]
+        });
+    });
 
+    /* Export Functionalities On Data Tables */
     $(document).ready(function() {
         $('#export-data-table').DataTable({
             dom: 'Bfrtip',
@@ -31,6 +48,7 @@
         });
     });
 
+    /* Limit Only One Check Box */
     function onlyOne(checkbox) {
         var checkboxes = document.getElementsByName('Login_Rank')
         checkboxes.forEach((item) => {
