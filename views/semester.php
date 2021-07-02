@@ -25,39 +25,39 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
 
-/* Add Year */
-if (isset($_POST['add_year'])) {
+/* Add Semester */
+if (isset($_POST['add_sem'])) {
     $error = 0;
-    if (isset($_POST['Year_name']) && !empty($_POST['Year_name'])) {
-        $Year_name = mysqli_real_escape_string($mysqli, trim($_POST['Year_name']));
+    if (isset($_POST['Semester_name']) && !empty($_POST['Semester_name'])) {
+        $Semester_name = mysqli_real_escape_string($mysqli, trim($_POST['Semester_name']));
     } else {
         $error = 1;
-        $err = "Year Name Cannot Be Empty";
+        $err = "Semester Name Cannot Be Empty";
     }
-    if (isset($_POST['Year_desc']) && !empty($_POST['Year_desc'])) {
-        $Year_desc = $_POST['Year_desc'];
+    if (isset($_POST['Semester_desc']) && !empty($_POST['Semester_desc'])) {
+        $Semester_desc = $_POST['Semester_desc'];
     } else {
         $error = 1;
-        $err = "Year Desc Cannot Be Empty";
+        $err = "Semester Desc Cannot Be Empty";
     }
 
     if (!$error) {
         //prevent Double entries
-        $sql = "SELECT * FROM  Year WHERE  Year_name='$Year_name' ";
+        $sql = "SELECT * FROM  Semester WHERE  Semester_name='$Semester_name' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($Year_name == $row['Year_name']) {
-                $err =  "$Year_name Already Exists";
+            if ($Semester_name == $row['YSemester_nameear_name']) {
+                $err =  "$Semester_name Already Exists";
             }
         } else {
             /* Persist Changes In Database */
-            $query = "INSERT INTO Year (Year_name, Year_desc) VALUES(?,?)";
+            $query = "INSERT INTO Semester (Semester_name, Semester_desc) VALUES(?,?)";
             $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('ss', $Year_name, $Year_desc);
+            $rc = $stmt->bind_param('ss', $Semester_name, $Semester_desc);
             $stmt->execute();
             if ($stmt) {
-                $success = "$Year_name Added";
+                $success = "$Semester_name Added";
             } else {
                 $info = "Please Try Again Or Try Later";
             }
@@ -65,52 +65,54 @@ if (isset($_POST['add_year'])) {
     }
 }
 
-/* Update Year */
-if (isset($_POST['update_year'])) {
+/* Update Semester */
+if (isset($_POST['update_sem'])) {
     $error = 0;
-    if (isset($_POST['Year_name']) && !empty($_POST['Year_name'])) {
-        $Year_name = mysqli_real_escape_string($mysqli, trim($_POST['Year_name']));
+    if (isset($_POST['Semester_name']) && !empty($_POST['Semester_name'])) {
+        $Semester_name = mysqli_real_escape_string($mysqli, trim($_POST['Semester_name']));
     } else {
         $error = 1;
-        $err = "Year Name Cannot Be Empty";
+        $err = "Semester Name Cannot Be Empty";
     }
-    if (isset($_POST['Year_desc']) && !empty($_POST['Year_desc'])) {
-        $Year_desc = $_POST['Year_desc'];
+    if (isset($_POST['Semester_desc']) && !empty($_POST['Semester_desc'])) {
+        $Semester_desc = $_POST['Semester_desc'];
     } else {
         $error = 1;
-        $err = "Year Desc Cannot Be Empty";
+        $err = "Semester Desc Cannot Be Empty";
     }
-    if (isset($_POST['Year_id']) && !empty($_POST['Year_id'])) {
-        $Year_id = $_POST['Year_id'];
+    if (isset($_POST['Semester_id']) && !empty($_POST['Semester_id'])) {
+        $Semester_id = $_POST['Semester_id'];
     } else {
         $error = 1;
-        $err = "Year ID Cannot Be Empty";
+        $err = "Semester ID Cannot Be Empty";
     }
 
     if (!$error) {
-
         /* Persist Changes In Database */
-        $query = "UPDATE Year  SET Year_name =?, Year_desc =? WHERE Year_id = ?";
+        $query = "UPDATE  Semester SET Semester_name =?, Semester_desc =? WHERE Semester_id = ?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('sss', $Year_name, $Year_desc, $Year_id);
+        $rc = $stmt->bind_param('sss', $Semester_name, $Semester_desc, $Semester_id);
         $stmt->execute();
         if ($stmt) {
-            $success = "$Year_name Updated";
+            $success = "$Semester_name Updated";
         } else {
             $info = "Please Try Again Or Try Later";
         }
     }
 }
+
+
+
 /* Delete Year */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $adn = "DELETE FROM Year WHERE Year_id=?";
+    $adn = "DELETE FROM Semester WHERE Semester_id=?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $delete);
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1; url=year_time");
+        $success = "Deleted" && header("refresh:1; url=semester");
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -136,9 +138,9 @@ require_once('../partials/head.php');
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <div class="btn-group float-right m-t-15">
-                            <button type="button" data-toggle="modal" data-target="#AddYear" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Academic Year <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
+                            <button type="button" data-toggle="modal" data-target="#AddSem" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Semester <span class="m-l-5"><i class="fa fa-plus"></i></span></button>
                         </div>
-                        <h4 class="page-title">Academic Year </h4>
+                        <h4 class="page-title">Semesters </h4>
                     </div>
                 </div>
             </div>
@@ -149,7 +151,7 @@ require_once('../partials/head.php');
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Create Academic Year</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Create Semester</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -157,15 +159,15 @@ require_once('../partials/head.php');
                         <div class="modal-body">
                             <form method="POST">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Year Name</label>
-                                    <input type="text" name="Year_name" class="form-control" required>
+                                    <label for="exampleInputEmail1">Semester Name</label>
+                                    <input type="text" name="Semester_name" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Year Details </label>
-                                    <textarea name="Year_desc" class="form-control Summernote" required rows="5"></textarea>
+                                    <label for="exampleInputEmail1">Semester Details </label>
+                                    <textarea name="Semester_desc" class="form-control Summernote" required rows="5"></textarea>
                                 </div>
                                 <div class="text-right">
-                                    <button type="submit" name="add_year" class="btn btn-primary">Submit</button>
+                                    <button type="submit" name="add_sem" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -182,32 +184,32 @@ require_once('../partials/head.php');
                         <table id="datatable" class="table table-bordered dt-responsive wrap">
                             <thead>
                                 <tr>
-                                    <th>Year Name</th>
-                                    <th>Year Details</th>
-                                    <th>Manage Years</th>
+                                    <th>Semester Name</th>
+                                    <th>Semester Details</th>
+                                    <th>Manage Semester</th>
                                 </tr>
                             </thead>
 
 
                             <tbody>
                                 <?php
-                                $ret = "SELECT * FROM `Year` ";
+                                $ret = "SELECT * FROM `Semester` ";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
-                                while ($year = $res->fetch_object()) {
+                                while ($sem = $res->fetch_object()) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $year->Year_name; ?></td>
-                                        <td class="bs-linebreak"><?php echo $year->Year_desc; ?></td>
+                                        <td><?php echo $sem->Semester_name; ?></td>
+                                        <td class="bs-linebreak"><?php echo $sem->Semester_desc; ?></td>
                                         <td>
                                             <?php
                                             if ($_SESSION['Login_Rank'] == 'Administrator') {
                                                 /* Allow User To Delete And Update Faculty */
                                                 echo
                                                 "
-                                                        <a href='#update-$year->Year_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
-                                                        <a href='year_time?delete=$year->Year_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
+                                                        <a href='#update-$sem->Semester_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
+                                                        <a href='semester?delete=$sem->Semester_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
 
                                                     ";
                                             } else {
@@ -215,11 +217,11 @@ require_once('../partials/head.php');
                                             }
                                             ?>
                                             <!-- Update Modal -->
-                                            <div class="modal fade" id="update-<?php echo $year->Year_id; ?>" tabindex="-1">
+                                            <div class="modal fade" id="update-<?php echo $sem->Semester_id; ?>" tabindex="-1">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Update Year</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Update Semester</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -227,17 +229,17 @@ require_once('../partials/head.php');
                                                         <div class="modal-body">
                                                             <form method="POST">
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Year Name</label>
-                                                                    <input type="text" name="Year_name" value="<?php echo $year->Year_name; ?>" class="form-control" required>
-                                                                    <input type="hidden" name="Year_id" value="<?php echo $year->Year_id; ?>" class="form-control" required>
+                                                                    <label for="exampleInputEmail1">Semester Name</label>
+                                                                    <input type="text" name="Semester_name" value="<?php echo $sem->Semester_name; ?>" class="form-control" required>
+                                                                    <input type="hidden" name="Semester_id" value="<?php echo $sem->Semester_id; ?>" class="form-control" required>
 
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Year Details </label>
-                                                                    <textarea name="Year_desc" class="form-control Summernote" required rows="5"><?php echo $year->Year_desc; ?></textarea>
+                                                                    <label for="exampleInputEmail1">Semester Details </label>
+                                                                    <textarea name="Semester_desc" class="form-control Summernote" required rows="5"><?php echo $year->Year_desc; ?></textarea>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="update_year" class="btn btn-primary">Submit</button>
+                                                                    <button type="submit" name="update_sem" class="btn btn-primary">Submit</button>
                                                                 </div>
                                                             </form>
                                                         </div>
