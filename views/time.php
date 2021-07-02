@@ -56,7 +56,7 @@ if (isset($_POST['add_time'])) {
 }
 
 
-/* Update Semester */
+/* Update Time */
 if (isset($_POST['update_time'])) {
     $error = 0;
     if (isset($_POST['Time_name']) && !empty($_POST['Time_name'])) {
@@ -67,6 +67,12 @@ if (isset($_POST['update_time'])) {
     }
     if (isset($_POST['Time_desc']) && !empty($_POST['Time_desc'])) {
         $Time_desc = $_POST['Time_desc'];
+    } else {
+        $error = 1;
+        $err = "Time Desc Cannot Be Empty";
+    }
+    if (isset($_POST['Time_id']) && !empty($_POST['Time_id'])) {
+        $Time_id = $_POST['Time_id'];
     } else {
         $error = 1;
         $err = "Time Desc Cannot Be Empty";
@@ -148,7 +154,7 @@ require_once('../partials/head.php');
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Time Details </label>
-                                    <textarea name="Time_details" class="form-control Summernote" required rows="5"></textarea>
+                                    <textarea name="Time_desc" class="form-control Summernote" required rows="5"></textarea>
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" name="add_time" class="btn btn-primary">Submit</button>
@@ -193,7 +199,7 @@ require_once('../partials/head.php');
                                                 echo
                                                 "
                                                         <a href='#update-$time->Time_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
-                                                        <a href='time?delete=$sem->Time_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
+                                                        <a href='time?delete=$time->Time_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
 
                                                     ";
                                             } else {
@@ -220,7 +226,7 @@ require_once('../partials/head.php');
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Time Details </label>
-                                                                    <textarea name="Time_desc" class="form-control Summernote" required rows="5"><?php echo $sem->Semester_desc; ?></textarea>
+                                                                    <textarea name="Time_desc" class="form-control Summernote" required rows="5"><?php echo $time->Time_desc; ?></textarea>
                                                                 </div>
                                                                 <div class="text-right">
                                                                     <button type="submit" name="update_time" class="btn btn-primary">Submit</button>
