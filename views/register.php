@@ -22,27 +22,25 @@
 session_start();
 include('../config/config.php');
 
-if (isset($_POST['Login'])) {
+if (isset($_POST['SignUp'])) {
+
     $Login_username = $_POST['Login_username'];
     $Login_Rank = $_POST['Login_Rank'];
     $Login_password = sha1(md5($_POST['Login_password']));
 
-    $stmt = $mysqli->prepare("SELECT Login_username, Login_password, Login_Rank, Login_id  FROM Login  WHERE Login_username =? AND Login_password =? AND Login_Rank = ?");
-    $stmt->bind_param('sss', $Login_username, $Login_password, $Login_Rank);
-    $stmt->execute(); //execute bind 
-
-    $stmt->bind_result($Login_username, $Login_password, $Login_Rank, $Login_id);
-    $rs = $stmt->fetch();
-    $_SESSION['Login_id'] = $Login_id;
-    $_SESSION['Login_Rank'] = $Login_Rank;
-
-    /* Decide Login User Dashboard Based On User Rank */
-    if ($rs) {
-        header("location:dashboard");
+    $query = "INSERT INTO Login (Login_username, Login_Rank, Login_password ) VALUES(?,?,?)";
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('sss', $Login_username, $Login_Rank, $Login_password);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "You Have Signed Up As $Login_Rank, Kindly Proceed To Sign In";
     } else {
-        $err = "Login Failed, Please Check Your Credentials And Login Permission ";
+        $info = "Please Try Again Or Try Later";
     }
 }
+
+
+
 require_once('../partials/head.php');
 ?>
 
@@ -61,7 +59,7 @@ require_once('../partials/head.php');
                 <div class="m-t-10 p-20">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <h6 class="text-muted text-uppercase m-b-0 m-t-0">Sign In</h6>
+                            <h6 class="text-muted text-uppercase m-b-0 m-t-0">Sign Up</h6>
                         </div>
                     </div>
                     <form method="POST" class="m-t-20">
@@ -80,11 +78,10 @@ require_once('../partials/head.php');
                         <div class="form-group row">
                             <div class="col-12">
                                 <div class="col-12 text-center">
-                                    <h6 class="text-muted text-uppercase m-b-0 m-t-0">Sign In As</h6>
+                                    <h6 class="text-muted text-uppercase m-b-0 m-t-0">Sign Up As</h6>
                                 </div>
                                 <div class="text-center">
                                     <select name="Login_Rank" class="custom-select mb-3">
-                                        <option value="Administrator">Administrator</option>
                                         <option value="Lecturer">Lecturer</option>
                                         <option value="Student">Student</option>
                                     </select>
@@ -94,16 +91,13 @@ require_once('../partials/head.php');
 
                         <div class="form-group text-center row m-t-10">
                             <div class="col-12">
-                                <button name="Login" class="btn btn-success btn-block waves-effect waves-light" type="submit">Log In</button>
+                                <button name="SignUp" class="btn btn-success btn-block waves-effect waves-light" type="submit">Sign Up</button>
                             </div>
                         </div>
 
                         <div class="form-group row m-t-30 mb-0">
                             <div class="col-12">
-                                <a href="reset_password" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot Your Password?</a>
-                            </div>
-                            <div class="col-12">
-                                <a href="register" class="text-muted"><i class="fa fa-user-plus m-r-5"></i> Sign Up</a>
+                                <a href="index" class="text-muted"><i class="fa fa-user m-r-5"></i> Already Has Account ?</a>
                             </div>
                         </div>
                     </form>

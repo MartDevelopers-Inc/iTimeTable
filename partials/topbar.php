@@ -58,7 +58,7 @@ while ($user = $res->fetch_object()) {
 
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="../public/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+                            <img src="../public/images/users/user.png" alt="user" class="rounded-circle">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
                             <!-- item-->
@@ -66,10 +66,16 @@ while ($user = $res->fetch_object()) {
                                 <h5 class="text-overflow"><small>Welcome! <?php echo $user->Login_username; ?></small> </h5>
                             </div>
 
-                            <!-- item-->
-                            <a href="settings" class="dropdown-item notify-item">
-                                <i class="zmdi zmdi-settings"></i> <span>Settings</span>
-                            </a>
+                            <?php
+                            if ($_SESSION['Login_Rank'] == 'Administrator') {
+                                echo "
+                                    <!-- item-->
+                                    <a href='settings' class='dropdown-item notify-item'>
+                                        <i class='zmdi zmdi-settings'></i> <span>Settings</span>
+                                    </a>
+                                ";
+                            } ?>
+
 
                             <!-- item-->
                             <a href="logout" class="dropdown-item notify-item">
@@ -87,69 +93,98 @@ while ($user = $res->fetch_object()) {
         </div> <!-- end container -->
     </div>
 
-    <div class="navbar-custom">
-        <div class="container">
-            <div id="navigation">
-                <!-- Navigation Menu-->
-                <ul class="navigation-menu">
-                    <li>
-                        <a href="dashboard"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#">
-                            <i class="zmdi zmdi-group"></i>
-                            <span> Academics Hierachy </span> </a>
-                        <ul class="submenu megamenu">
-                            <li>
-                                <ul>
-                                    <li><a href="faculties">Faculties</a></li>
-                                    <li><a href="departments">Departments</a></li>
-                                    <li><a href="courses">Courses</a></li>
-                                    <li><a href="units">Units</a></li>
-                                </ul>
-                            </li>
+<?php
+    if ($_SESSION['Login_Rank'] == 'Administrator' && $_SESSION['Login_Rank'] == 'Lecturer') {
+        echo
+        '
+        <div class="navbar-custom">
+            <div class="container">
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <li>
+                            <a href="dashboard"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">
+                                <i class="zmdi zmdi-group"></i>
+                                <span> Academics Hierachy </span> </a>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+                                        <li><a href="faculties">Faculties</a></li>
+                                        <li><a href="departments">Departments</a></li>
+                                        <li><a href="courses">Courses</a></li>
+                                        <li><a href="units">Units</a></li>
+                                    </ul>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#">
-                            <i class="zmdi zmdi-time-interval"></i>
-                            <span> Semester & Year </span> </a>
-                        <ul class="submenu megamenu">
-                            <li>
-                                <ul>
-                                    <li><a href="year_time">Year</a></li>
-                                    <li><a href="semester">Semester</a></li>
-                                    <li><a href="time">Time</a></li>
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">
+                                <i class="zmdi zmdi-time-interval"></i>
+                                <span> Semester & Year </span> </a>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+                                        <li><a href="year_time">Year</a></li>
+                                        <li><a href="semester">Semester</a></li>
+                                        <li><a href="time">Time</a></li>
+                                    </ul>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="lecturers"><i class="zmdi zmdi-accounts-alt"></i> <span> Lecturers </span> </a>
-                    </li>
-                    <li>
-                        <a href="rooms"><i class="zmdi zmdi-home"></i> <span> Rooms </span> </a>
-                    </li>
-                    <li>
-                        <a href="timetable"><i class="zmdi zmdi-grid"></i> <span> Time Table </span> </a>
-                    </li>
-                    <li class="has-submenu">
-                        <a href="#"><i class="zmdi zmdi-file-text"></i> <span> Reports </span> </a>
-                        <ul class="submenu megamenu">
-                            <li>
-                                <ul>
-                                    <li><a href="report_timetable">Time Tables</a></li>
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="lecturers"><i class="zmdi zmdi-accounts-alt"></i> <span> Lecturers </span> </a>
+                        </li>
+                        <li>
+                            <a href="rooms"><i class="zmdi zmdi-home"></i> <span> Rooms </span> </a>
+                        </li>
+                        <li>
+                            <a href="timetable"><i class="zmdi zmdi-grid"></i> <span> Time Table </span> </a>
+                        </li>
 
-                        </ul>
-                    </li>
-                </ul>
-                <!-- End navigation menu  -->
+                        <li class="has-submenu">
+                            <a href="#"><i class="zmdi zmdi-file-text"></i> <span> Reports </span> </a>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+                                        <li><a href="report_timetable">Time Tables</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <!-- End navigation menu  -->
+                </div>
             </div>
         </div>
-    </div>
-<?php
-} ?>
+    ';
+    } else {
+        echo
+        '
+        <div class="navbar-custom">
+            <div class="container">
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <li>
+                            <a href="dashboard"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                        </li>
+                        <li>
+                            <a href="report_timetable"><i class="zmdi zmdi-accounts-alt"></i> <span> Time Table </span> </a>
+                        </li>
+
+                    </ul>
+                    <!-- End navigation menu  -->
+                </div>
+            </div>
+        </div>
+    ';
+    }
+}
+?>

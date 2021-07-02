@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="../public/images/favicon.ico">
 
     <!-- App title -->
-    <title>iTimeTable - Automated Time Table Generator</title>
+    <title>Time Table</title>
 
     <!-- Bootstrap CSS -->
     <link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
