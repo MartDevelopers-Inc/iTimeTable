@@ -25,103 +25,93 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
 
-/* Add Lec */
-if (isset($_POST['add_lec'])) {
+/* Add Room */
+if (isset($_POST['add_room'])) {
     $error = 0;
-    if (isset($_POST['Lecturer_name']) && !empty($_POST['Lecturer_name'])) {
-        $Lecturer_name = mysqli_real_escape_string($mysqli, trim($_POST['Lecturer_name']));
+    if (isset($_POST['Room_name']) && !empty($_POST['Room_name'])) {
+        $Room_name = mysqli_real_escape_string($mysqli, trim($_POST['Room_name']));
     } else {
         $error = 1;
         $err = "Name Cannot Be Empty";
     }
-    if (isset($_POST['Lecturer_email']) && !empty($_POST['Lecturer_email'])) {
-        $Lecturer_email = mysqli_real_escape_string($mysqli, trim($_POST['Lecturer_email']));
+    if (isset($_POST['Room_desc']) && !empty($_POST['Room_desc'])) {
+        $Room_desc = ($_POST['Room_desc']);
     } else {
         $error = 1;
-        $err = "Email Cannot Be Empty";
+        $err = "Room Details Cannot Be Empty";
     }
-    if (isset($_POST['Lecturer_Mobile_Number']) && !empty($_POST['Lecturer_Mobile_Number'])) {
-        $Lecturer_Mobile_Number = mysqli_real_escape_string($mysqli, trim($_POST['Lecturer_Mobile_Number']));
+    if (isset($_POST['Room_No_floor']) && !empty($_POST['Room_No_floor'])) {
+        $Room_No_floor = mysqli_real_escape_string($mysqli, trim($_POST['Room_No_floor']));
     } else {
         $error = 1;
-        $err = "Mobile Number Cannot Be Empty";
+        $err = "Room Number Floor Cannot Be Empty";
     }
     if (!$error) {
-        //prevent Double entries
-        $sql = "SELECT * FROM  Lecturer WHERE  Lecturer_email='$Lecturer_email' || Lecturer_Mobile_Number = '$Lecturer_Mobile_Number'  ";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($Lecturer_Mobile_Number == $row['Lecturer_Mobile_Number']) {
-                $err =  "Mobile Number Already Exists";
-            } else {
-                $err =  "Email  Already Exists";
-            }
-        } else {
-            $query = "INSERT INTO Lecturer (Lecturer_name, Lecturer_email, Lecturer_Mobile_Number) VALUES(?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('sss', $Lecturer_name, $Lecturer_email, $Lecturer_Mobile_Number);
-            $stmt->execute();
-            if ($stmt) {
-                $success = "$Lecturer_name Added";
-            } else {
-                $info = "Please Try Again Or Try Later";
-            }
-        }
-    }
-}
-
-
-/* Update Time */
-if (isset($_POST['update_lec'])) {
-    $error = 0;
-    if (isset($_POST['Lecturer_name']) && !empty($_POST['Lecturer_name'])) {
-        $Lecturer_name = mysqli_real_escape_string($mysqli, trim($_POST['Lecturer_name']));
-    } else {
-        $error = 1;
-        $err = "Name Cannot Be Empty";
-    }
-    if (isset($_POST['Lecturer_email']) && !empty($_POST['Lecturer_email'])) {
-        $Lecturer_email = mysqli_real_escape_string($mysqli, trim($_POST['Lecturer_email']));
-    } else {
-        $error = 1;
-        $err = "Email Cannot Be Empty";
-    }
-    if (isset($_POST['Lecturer_Mobile_Number']) && !empty($_POST['Lecturer_Mobile_Number'])) {
-        $Lecturer_Mobile_Number = mysqli_real_escape_string($mysqli, trim($_POST['Lecturer_Mobile_Number']));
-    } else {
-        $error = 1;
-        $err = "Mobile Number Cannot Be Empty";
-    }
-    if (isset($_POST['Lecturer_id']) && !empty($_POST['Lecturer_id'])) {
-        $Lecturer_id = mysqli_real_escape_string($mysqli, trim($_POST['Lecturer_id']));
-    } else {
-        $error = 1;
-        $err = "ID Cannot Be Empty";
-    }
-    if (!$error) {
-        $query = "UPDATE Lecturer SET Lecturer_name =?, Lecturer_email =?, Lecturer_Mobile_Number =? WHERE Lecturer_id = ?";
+        $query = "INSERT INTO Room (Room_name, Room_desc, Room_No_floor) VALUES(?,?,?)";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssss', $Lecturer_name, $Lecturer_email, $Lecturer_Mobile_Number, $Lecturer_id);
+        $rc = $stmt->bind_param('sss', $Room_name, $Room_desc, $Room_No_floor);
         $stmt->execute();
         if ($stmt) {
-            $success = "$Lecturer_name Updated";
+            $success = "$Room_name Added";
         } else {
             $info = "Please Try Again Or Try Later";
         }
     }
 }
 
-/* Delete Year */
+
+
+/* Update Room */
+if (isset($_POST['update_room'])) {
+    $error = 0;
+    if (isset($_POST['Room_name']) && !empty($_POST['Room_name'])) {
+        $Room_name = mysqli_real_escape_string($mysqli, trim($_POST['Room_name']));
+    } else {
+        $error = 1;
+        $err = "Name Cannot Be Empty";
+    }
+    if (isset($_POST['Room_desc']) && !empty($_POST['Room_desc'])) {
+        $Room_desc = ($_POST['Room_desc']);
+    } else {
+        $error = 1;
+        $err = "Room Details Cannot Be Empty";
+    }
+    if (isset($_POST['Room_No_floor']) && !empty($_POST['Room_No_floor'])) {
+        $Room_No_floor = mysqli_real_escape_string($mysqli, trim($_POST['Room_No_floor']));
+    } else {
+        $error = 1;
+        $err = "Room Number Floor Cannot Be Empty";
+    }
+    if (isset($_POST['Room_id']) && !empty($_POST['Room_id'])) {
+        $Room_id = mysqli_real_escape_string($mysqli, trim($_POST['Room_id']));
+    } else {
+        $error = 1;
+        $err = "Room ID Cannot Be Empty";
+    }
+    if (!$error) {
+        $query = "UPDATE Room SET Room_name =?, Room_desc =?, Room_No_floor =? WHERE Room_id = ?";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ssss', $Room_name, $Room_desc, $Room_No_floor, $Room_id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "$Room_name Updated";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
+
+
+/* Delete Room */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $adn = "DELETE FROM Lecturer WHERE Lecturer_id=?";
+    $adn = "DELETE FROM Room WHERE Room_id=?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $delete);
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1; url=lecturers");
+        $success = "Deleted" && header("refresh:1; url=rooms");
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -147,40 +137,42 @@ require_once('../partials/head.php');
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <div class="btn-group float-right m-t-15">
-                            <button type="button" data-toggle="modal" data-target="#AddLecturer" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Lecturer<span class="m-l-5"><i class="fa fa-plus"></i></span></button>
+                            <button type="button" data-toggle="modal" data-target="#Rooms" class="btn btn-custom dropdown-toggle waves-effect waves-light">Add Room<span class="m-l-5"><i class="fa fa-plus"></i></span></button>
                         </div>
-                        <h4 class="page-title">Lecturers</h4>
+                        <h4 class="page-title">Rooms</h4>
                     </div>
                 </div>
             </div>
             <!-- end row -->
 
             <!-- Add Modal -->
-            <div class="modal fade" id="AddLecturer" tabindex="-1">
+            <div class="modal fade" id="Rooms" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Create Lecturer</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Create Room</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <form method="POST">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Name</label>
-                                    <input type="text" name="Lecturer_name" class="form-control" required>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputEmail1">Room Name</label>
+                                        <input type="text" name="Room_name" class="form-control" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputEmail1">Room Number Or Floor Number </label>
+                                        <input type="text" name="Room_No_floor" class="form-control" required>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email </label>
-                                    <input type="text" name="Lecturer_email" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Mobile Number </label>
-                                    <input type="text" name="Lecturer_Mobile_Number" class="form-control" required>
+                                    <label for="exampleInputEmail1">Room Details </label>
+                                    <textarea name="Room_desc" class="form-control Summernote" required rows="5"></textarea>
                                 </div>
                                 <div class="text-right">
-                                    <button type="submit" name="add_lec" class="btn btn-primary">Submit</button>
+                                    <button type="submit" name="add_room" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -197,9 +189,9 @@ require_once('../partials/head.php');
                         <table id="datatable" class="table table-bordered dt-responsive wrap">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Room Name</th>
+                                    <th>Room No / Floor No</th>
+                                    <th>Room Details</th>
                                     <th>Manage</th>
                                 </tr>
                             </thead>
@@ -207,24 +199,24 @@ require_once('../partials/head.php');
 
                             <tbody>
                                 <?php
-                                $ret = "SELECT * FROM `Lecturer` ";
+                                $ret = "SELECT * FROM `Room` ";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
-                                while ($lec = $res->fetch_object()) {
+                                while ($room = $res->fetch_object()) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $lec->Lecturer_name; ?></td>
-                                        <td><?php echo $lec->Lecturer_email; ?></td>
-                                        <td><?php echo $lec->Lecturer_Mobile_Number; ?></td>
+                                        <td><?php echo $room->Room_name; ?></td>
+                                        <td><?php echo $room->Room_No_floor; ?></td>
+                                        <td><?php echo $room->Room_desc; ?></td>
                                         <td>
                                             <?php
                                             if ($_SESSION['Login_Rank'] == 'Administrator') {
                                                 /* Allow User To Delete And Update Faculty */
                                                 echo
                                                 "
-                                                        <a href='#update-$lec->Lecturer_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
-                                                        <a href='lecturers?delete=$lec->Lecturer_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
+                                                        <a href='#update-$room->Room_id' data-toggle='modal' class='badge badge-warning'><i class ='fa fa-edit'></i> Update</a>
+                                                        <a href='rooms?delete=$room->Room_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
 
                                                     ";
                                             } else {
@@ -232,7 +224,7 @@ require_once('../partials/head.php');
                                             }
                                             ?>
                                             <!-- Update Modal -->
-                                            <div class="modal fade" id="update-<?php echo $lec->Lecturer_id; ?>" tabindex="-1">
+                                            <div class="modal fade" id="update-<?php echo $room->Room_id; ?>" tabindex="-1">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -243,21 +235,23 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="modal-body">
                                                             <form method="POST">
-                                                                <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Name</label>
-                                                                    <input type="text" name="Lecturer_name" value="<?php echo $lec->Lecturer_name; ?>" class="form-control" required>
-                                                                    <input type="hidden" name="Lecturer_id" value="<?php echo $lec->Lecturer_id; ?>" class="form-control" required>
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="exampleInputEmail1">Room Name</label>
+                                                                        <input type="text" name="Room_name" class="form-control" value="<?php echo $room->Room_name; ?>" required>
+                                                                        <input type="hidden" name="Room_id" value="<?php echo $room->Room_id; ?>" class="form-control" required>
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="exampleInputEmail1">Room Number Or Floor Number </label>
+                                                                        <input type="text" name="Room_No_floor" value="<?php echo $room->Room_No_floor; ?>" class="form-control" required>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Email </label>
-                                                                    <input type="text" name="Lecturer_email" value="<?php echo $lec->Lecturer_email; ?>" class="form-control" required>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Mobile Number </label>
-                                                                    <input type="text" name="Lecturer_Mobile_Number" value="<?php echo $lec->Lecturer_Mobile_Number; ?>" class="form-control" required>
+                                                                    <label for="exampleInputEmail1">Room Details </label>
+                                                                    <textarea name="Room_desc" class="form-control Summernote" required rows="5"><?php echo $room->Room_desc; ?></textarea>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="update_lec" class="btn btn-primary">Submit</button>
+                                                                    <button type="submit" name="update_room" class="btn btn-primary">Submit</button>
                                                                 </div>
                                                             </form>
                                                         </div>
