@@ -45,3 +45,14 @@ if (!empty($_POST["DepartmentName"])) {
         echo htmlentities($row['Department_id']);
     }
 }
+
+/* Get Course ID */
+if (!empty($_POST["CourseName"])) {
+    $id = $_POST['CourseName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Courses WHERE Course_name = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Course_id']);
+    }
+}

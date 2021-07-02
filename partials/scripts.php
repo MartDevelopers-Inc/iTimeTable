@@ -83,6 +83,20 @@
             }
         });
     }
+
+    function GetCourseName(val) {
+        /* Course Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'CourseName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#CourseID').val(data);
+            }
+        });
+    }
+
 </script>
 <!-- iZi Toast Js -->
 <script src="../public/plugins/iziToast/iziToast.min.js" type="text/javascript"></script>
