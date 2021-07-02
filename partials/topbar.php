@@ -33,7 +33,7 @@ while ($user = $res->fetch_object()) {
             <!-- LOGO -->
             <div class="topbar-left">
                 <a href="" class="logo">
-                    <span>Time Table Generator</span>
+                    <span>Time Table</span>
                 </a>
             </div>
             <!-- End Logo container-->
@@ -94,7 +94,7 @@ while ($user = $res->fetch_object()) {
     </div>
 
 <?php
-    if ($_SESSION['Login_Rank'] == 'Administrator' && $_SESSION['Login_Rank'] == 'Lecturer') {
+    if ($_SESSION['Login_Rank'] == 'Administrator' || $_SESSION['Login_Rank'] == 'Lecturer') {
         echo
         '
         <div class="navbar-custom">
@@ -176,7 +176,7 @@ while ($user = $res->fetch_object()) {
                             <a href="dashboard"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
                         </li>
                         <li>
-                            <a href="report_timetable"><i class="zmdi zmdi-accounts-alt"></i> <span> Time Table </span> </a>
+                            <a href="report_timetable"><i class="zmdi zmdi-grid"></i> <span> Time Table </span> </a>
                         </li>
 
                     </ul>
