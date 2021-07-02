@@ -34,7 +34,6 @@ if (!empty($_POST["FacultyName"])) {
 }
 
 
-
 /* Get Department ID */
 if (!empty($_POST["DepartmentName"])) {
     $id = $_POST['DepartmentName'];
