@@ -285,19 +285,8 @@ require_once('../partials/head.php');
 
                             <tbody>
                                 <?php
-                                $ret =
-                                    "SELECT Year.Year_name, Semester.Semester_name,
-                                Unit.Unit_name, Lecturer.Lecturer_name,
-                                Lecturer.Lecturer_email, 
-                                Lecturer.Lecturer_Mobile_Number,
-                                Time.time_name, Room.Room_name 
-                                FROM Semester 
-                                INNER JOIN Year ON Timetable.Timetable_Year_id
-                                INNER JOIN Semester ON Timetable.Timetable_Semester_id
-                                INNER JOIN Unit ON Timetable.Timetable_Unit_id
-                                INNER JOIN Lecturer ON Timetable.Timetable_Lecturer_id 
-                                INNER JOIN  Time ON Timetable.Timetable_Time_id
-                                INNER JOIN Room ON  Timetable.Timetable_Room_id
+                                $ret = "SELECT Timetable.Timetable_id, Year.Year_name, Semester.Semester_name, Unit.Unit_name, Lecturer.Lecturer_name, Lecturer.Lecturer_email, Lecturer.Lecturer_Mobile_Number, Time.Time_name, Room.Room_name FROM Timetable LEFT JOIN Year ON Timetable.Timetable_Year_id LEFT JOIN Semester ON Timetable.Timetable_Semester_id LEFT JOIN Unit ON Timetable.Timetable_Unit_id LEFT JOIN Lecturer ON Timetable.Timetable_Lecturer_id LEFT JOIN  Time ON Timetable.Timetable_Time_id LEFT JOIN Room ON  Timetable.Timetable_Room_id
+                                WHERE Timetable.Timetable_Year_id = Year.Year_id AND Timetable.Timetable_Semester_id = Semester.Semester_id AND Timetable.Timetable_Unit_id = Unit.Unit_id AND Timetable.Timetable_Lecturer_id = Lecturer.Lecturer_id AND Timetable.Timetable_Time_id = Time.Time_id AND Timetable.Timetable_Room_id = Room.Room_id;
                                 ";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
