@@ -22,7 +22,7 @@
 
 include('../config/pdoconfig.php');
 
-/* Get Faculty Name */
+/* Get Faculty ID */
 if (!empty($_POST["FacultyName"])) {
     $id = $_POST['FacultyName'];
     $stmt = $DB_con->prepare("SELECT * FROM Faculty WHERE Faculty_name = :id");
@@ -30,5 +30,17 @@ if (!empty($_POST["FacultyName"])) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo htmlentities($row['Faculty_id']);
+    }
+}
+
+
+/* Get Department ID */
+if (!empty($_POST["DepartmentName"])) {
+    $id = $_POST['DepartmentName'];
+    $stmt = $DB_con->prepare("SELECT * FROM Department WHERE Department_id = :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Department_id']);
     }
 }

@@ -57,9 +57,9 @@
     }
     /* 
     Ajaxes
-    1. Get Faculty Details
      */
     function GetFacultyDetails(val) {
+        /* Faculty Details */
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -67,6 +67,19 @@
             success: function(data) {
                 //alert(data);
                 $('#FacultyID').val(data);
+            }
+        });
+    }
+    
+    function GetDepartmentDetails(val) {
+        /* Department Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'DepartmentName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#DepartmentID').val(data);
             }
         });
     }
