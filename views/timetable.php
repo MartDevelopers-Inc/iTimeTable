@@ -266,15 +266,18 @@ require_once('../partials/head.php');
             <!-- End Modal -->
 
 
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-12">
                     <div class="card-box">
                         <table id="datatable" class="table table-bordered dt-responsive wrap">
                             <thead>
                                 <tr>
-                                    <th>Room Name</th>
-                                    <th>Room No / Floor No</th>
-                                    <th>Room Details</th>
+                                    <th>Academic Year</th>
+                                    <th>Semester</th>
+                                    <th>Unit Name</th>
+                                    <th>Lecturer Details</th>
+                                    <th>Class Time</th>
+                                    <th>Room Number</th>
                                     <th>Manage</th>
                                 </tr>
                             </thead>
@@ -282,23 +285,39 @@ require_once('../partials/head.php');
 
                             <tbody>
                                 <?php
-                                $ret = "SELECT * FROM `Room` ";
+                                $ret =
+                                    "SELECT Year.Year_name, Semester.Semester_name,
+                                Unit.Unit_name, Lecturer.Lecturer_name,
+                                Lecturer.Lecturer_email, 
+                                Lecturer.Lecturer_Mobile_Number,
+                                Time.time_name, Room.Room_name 
+                                FROM Semester 
+                                INNER JOIN Year ON Timetable.Timetable_Year_id
+                                INNER JOIN Semester ON Timetable.Timetable_Semester_id
+                                INNER JOIN Unit ON Timetable.Timetable_Unit_id
+                                INNER JOIN Lecturer ON Timetable.Timetable_Lecturer_id 
+                                INNER JOIN  Time ON Timetable.Timetable_Time_id
+                                INNER JOIN Room ON  Timetable.Timetable_Room_id
+                                ";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
-                                while ($room = $res->fetch_object()) {
+                                while ($time_table = $res->fetch_object()) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $room->Room_name; ?></td>
-                                        <td><?php echo $room->Room_No_floor; ?></td>
-                                        <td><?php echo $room->Room_desc; ?></td>
+                                        <td><?php echo $time_table->Year_name; ?></td>
+                                        <td><?php echo $time_table->Semester_name; ?></td>
+                                        <td><?php echo $time_table->Unit_name; ?></td>
+                                        <td><?php echo $time_table->Lecturer_name . "<br> Email: " . $time_table->Lecturer_email . "<br>Phone No: " . $time_table->Lecturer_Mobile_Number; ?></td>
+                                        <td><?php echo $time_table->Time_name; ?></td>
+                                        <td><?php echo $time_table->Room_name; ?></td>
                                         <td>
                                             <?php
                                             if ($_SESSION['Login_Rank'] == 'Administrator') {
                                                 /* Allow User To Delete And Update Faculty */
                                                 echo
                                                 "
-                                                        <a href='timetable?delete=$tt->Room_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
+                                                        <a href='timetable?delete=$time_table->Timetable_id'  class='badge badge-danger'><i class ='fa fa-trash'></i> Delete</a>
 
                                                     ";
                                             } else {
@@ -312,7 +331,7 @@ require_once('../partials/head.php');
                         </table>
                     </div>
                 </div>
-            </div> <!-- end row -->
+            </div>
             <!-- Footer -->
             <?php require_once('../partials/footer.php'); ?>
             <!-- End Footer -->
