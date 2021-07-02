@@ -34,7 +34,7 @@ if (isset($_POST['Update_Profile'])) {
 
     $query = "UPDATE Login SET Login_username = ?, Login_Rank = ?, Login_password = ? WHERE Login_id = '$Login_id' ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sss', $Login_username, $Login_password, $Login_Rank);
+    $rc = $stmt->bind_param('sss', $Login_username,  $Login_Rank, $Login_password);
     $stmt->execute();
     if ($stmt) {
 
@@ -94,7 +94,7 @@ require_once('../partials/head.php');
 
                                     <fieldset class="form-group">
                                         <label for="exampleSelect1">Login Rank</label>
-                                        <select class="form-control" id="exampleSelect1">
+                                        <select class="form-control" name="Login_Rank" id="exampleSelect1">
                                             <option>Administrator</option>
                                             <option>Staff</option>
                                         </select>

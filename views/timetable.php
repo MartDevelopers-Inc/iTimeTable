@@ -76,10 +76,11 @@ if (isset($_POST['add_tt'])) {
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($Timetable_Unit_id == $row['Timetable_Unit_id'] && $Timetable_Time_id = $row['Timetable_Time_id'] &&  $Timetable_Room_id = $row['Timetable_Room_id']) {
-                $err =  "Unit Already Added In The Time Table";
-            } else {
+            if ($Timetable_Time_id == $row['Timetable_Time_id'] &&  $Timetable_Room_id == $row['Timetable_Room_id']){
                 $err =  "Room And Time Already Assigned Class";
+                /* Check If Room Has Class Same Time */
+            } else {
+                /* Nothing */
             }
         } else {
             $query = "INSERT INTO Timetable (Timetable_Unit_id, Timetable_Year_id, Timetable_Semester_id, Timetable_Lecturer_id, Timetable_Time_id, Timetable_Room_id) VALUES(?,?,?,?,?,?)";
