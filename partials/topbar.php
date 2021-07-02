@@ -111,14 +111,20 @@ while ($user = $res->fetch_object()) {
 
                         </ul>
                     </li>
-                    <li>
-                        <a href="year_time">
+                    <li class="has-submenu">
+                        <a href="#">
                             <i class="zmdi zmdi-time-interval"></i>
-                            <span> Years & Time </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="semester"><i class="zmdi zmdi-widgets"></i> <span> Semesters </span> </a>
+                            <span> Semester & Year </span> </a>
+                        <ul class="submenu megamenu">
+                            <li>
+                                <ul>
+                                    <li><a href="year_time">Year</a></li>
+                                    <li><a href="semester">Semester</a></li>
+                                    <li><a href="time">Time</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
                     </li>
                     <li>
                         <a href="lecturers"><i class="zmdi zmdi-accounts-alt"></i> <span> Lecturers </span> </a>
